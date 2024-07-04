@@ -42,6 +42,9 @@ function App() {
     } else if (timeLeft === 0) {
       setIsTyping(false);
       setIsMain(false);
+      console.log('worked, gadi');
+      console.log(WPM);
+      console.log(accuracy);
     }
 
     return () => {
@@ -74,6 +77,7 @@ function App() {
     } else {
       setIsTyping(false);
       setIsMain(false);
+      console.log('ehse raz, gadi')
     }
   }
 
@@ -99,7 +103,7 @@ function App() {
       {isMain ?
       <>
         <div className='content'>
-          <p>{timeLeft}</p>
+          <p className='time_left'>{timeLeft}</p>
           <input className='input' onChange={e => handleChange(e)} ref={inputRef} />
           <p className='text' onClick={() => inputRef.current.focus()}>
             {currentText.split('').map((char, index) => <span key={index} className={`char${index === charIndex ? ' active' : ''}${correntWrong[index]}`} ref={(e) => charRef.current[index] = e}>{char}</span>)}
@@ -114,14 +118,14 @@ function App() {
         </div>
       </>
        : 
-      <>
+      <div className='result_section'>
         <div className='results'>
           <p>{WPM} WPM</p>
           <p>{accuracy}% ACC</p>
         </div>
         <p>{time}</p>
         <img src={restart} className='restart' onClick={reset} />
-      </>
+      </div>
       }
     </div>
   )

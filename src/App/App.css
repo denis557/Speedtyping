@@ -8,6 +8,11 @@
     align-items: center;
 }
 
+.time_left {
+    font-size: 2.604vw;
+    color: #678198;
+}
+
 .input {
     opacity: 0;
     position: absolute;
@@ -60,4 +65,27 @@
     font-size: 2.8125vw;
     color: white;
     user-select: none;
+}
+
+.result_section {
+    display: flex;
+    flex-direction: column;
+    gap: 4.8543vh;
+    align-items: center;
+}
+
+.result_section p {
+    font-size: 2.604vw;
+    color: #678198;
+}
+
+.results {
+    display: flex;
+    flex-direction: row;
+    gap: 4.6875vw;
+}
+
+.results p {
+    font-size: 2.604vw;
+    color: #678198;
 }
