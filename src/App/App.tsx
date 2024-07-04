@@ -81,19 +81,26 @@ function App() {
 
   return (
     <div className='body'>
-      <div className='content'>
-        <input className='input' onChange={e => handleChange(e)} ref={inputRef} />
-        <p className='text'>
-          {currentText.split('').map((char, index) => <span key={index} className={`char${index === charIndex ? ' active' : ''}${correntWrong[index]}`} ref={(e) => charRef.current[index] = e}>{char}</span>)}
-        </p>
-      </div>
-      <img src={restart} className='restart' onClick={reset} />
-      <div className='bar'>
-        <p>15</p>
-        <p>30</p>
-        <p>60</p>
-        <p>120</p>
-      </div>
+      {isMain ?
+      <>
+        <div className='content'>
+          <input className='input' onChange={e => handleChange(e)} ref={inputRef} />
+          <p className='text'>
+            {currentText.split('').map((char, index) => <span key={index} className={`char${index === charIndex ? ' active' : ''}${correntWrong[index]}`} ref={(e) => charRef.current[index] = e}>{char}</span>)}
+          </p>
+        </div>
+        <img src={restart} className='restart' onClick={reset} />
+        <div className='bar'>
+          <p>15</p>
+          <p>30</p>
+          <p>60</p>
+          <p>120</p>
+        </div>
+      </>
+       : 
+      <>
+      </>
+      }
     </div>
   )
 }
