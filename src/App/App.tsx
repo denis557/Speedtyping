@@ -4,12 +4,14 @@ import restart from '../assets/restart.svg';
 import './App.css';
 
 function App() {
-  const time = 60;
+  // const time = 60;
+  const [time, setTime] = useState(60);
   const [timeLeft, setTimeLeft] = useState(time);
-  let [mistakes, setMistakes] = useState<number>(0);
-  let [charIndex, setCharIndex] = useState<number>(0);
+  const [mistakes, setMistakes] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
   const [WPM, setWPM] = useState(0);
+  const [accuracy, setAccuracy] = useState<number | string>(0);
   const [correntWrong, setCorrectWrong] = useState<any>([]);
   const [currentText, setCurrentText] = useState(texts[Math.floor(Math.random() * texts.length)])
   const [isMain, setIsMain] = useState(true);
@@ -26,16 +28,20 @@ function App() {
     if(isTyping && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft(timeLeft - 1);
-        let correctChars = charIndex - mistakes;
-        let totalTime = time - timeLeft;
+        const correctChars = charIndex - mistakes;
+        const totalTime = time - timeLeft;
 
         let wpm = Math.round((correctChars / 5 / totalTime) * 60);
         wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
         setWPM(wpm);
+
+        let acc = 100 - (100 * mistakes / charIndex);
+        acc = acc < 0 || !acc || acc === Infinity ? 0 : acc;
+        setAccuracy(acc.toFixed(2));
       }, 1000)
     } else if (timeLeft === 0) {
-      // clearInterval(interval);
       setIsTyping(false);
+      setIsMain(false);
     }
 
     return () => {
@@ -61,10 +67,20 @@ function App() {
         correntWrong[charIndex] = ' incorrect ';
       }
 
-      if(charIndex === characters.length - 1) setIsTyping(false);
+      if(charIndex === characters.length - 1) {
+        setIsTyping(false);
+        setIsMain(false);
+      }
     } else {
       setIsTyping(false);
+      setIsMain(false);
     }
+  }
+
+  function changeTime(seconds: number): void {
+    setTime(seconds);
+    setTimeLeft(seconds);
+    inputRef.current.focus;
   }
 
   function reset() {
@@ -75,7 +91,6 @@ function App() {
     setWPM(0);
     setCorrectWrong(Array (charRef.current.length).fill(''));
     setIsMain(true);
-    inputRef.current.focus();
     setCurrentText(texts[Math.floor(Math.random() * texts.length)])
   }
 
@@ -84,21 +99,28 @@ function App() {
       {isMain ?
       <>
         <div className='content'>
+          <p>{timeLeft}</p>
           <input className='input' onChange={e => handleChange(e)} ref={inputRef} />
-          <p className='text'>
+          <p className='text' onClick={() => inputRef.current.focus()}>
             {currentText.split('').map((char, index) => <span key={index} className={`char${index === charIndex ? ' active' : ''}${correntWrong[index]}`} ref={(e) => charRef.current[index] = e}>{char}</span>)}
           </p>
         </div>
         <img src={restart} className='restart' onClick={reset} />
         <div className='bar'>
-          <p>15</p>
-          <p>30</p>
-          <p>60</p>
-          <p>120</p>
+          <p onClick={() => changeTime(15)}>15</p>
+          <p onClick={() => changeTime(30)}>30</p>
+          <p onClick={() => changeTime(60)}>60</p>
+          <p onClick={() => changeTime(120)}>120</p>
         </div>
       </>
        : 
       <>
+        <div className='results'>
+          <p>{WPM} WPM</p>
+          <p>{accuracy}% ACC</p>
+        </div>
+        <p>{time}</p>
+        <img src={restart} className='restart' onClick={reset} />
       </>
       }
     </div>

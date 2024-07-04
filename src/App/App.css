@@ -19,7 +19,7 @@
     max-width: 76.614583vw; */
     max-height: 36vh;
     max-width: 81vw;
-    overflow: hidden;
+    overflow-y:auto;
     font-size: 2.60416vw;
     color: #92A4BE;
     user-select: none;
@@ -59,4 +59,5 @@
 .bar p {
     font-size: 2.8125vw;
     color: white;
+    user-select: none;
 }
