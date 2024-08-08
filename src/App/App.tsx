@@ -4,7 +4,7 @@ import restart from '../assets/restart.svg';
 import './App.css';
 
 function App() {
-  const [time, setTime] = useState(60);
+  const time = 60;
   const [timeLeft, setTimeLeft] = useState(time);
   const [mistakes, setMistakes] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
@@ -75,14 +75,7 @@ function App() {
       }
     } else {
       setIsTyping(false);
-      setIsMain(false);
     }
-  }
-
-  function changeTime(seconds: number): void {
-    setTime(seconds);
-    setTimeLeft(seconds);
-    inputRef.current.focus;
   }
 
   function reset() {
@@ -116,14 +109,8 @@ function App() {
         </div>
       </>
        : 
-      <div className='result_section'>
-        <div className='results'>
-          <p>{WPM} WPM</p>
-          <p>{accuracy}% ACC</p>
-        </div>
-        <p>{time} seconds</p>
-        <img src={restart} className='restart' onClick={reset} />
-      </div>
+      <>
+      </>
       }
     </div>
   )
